@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- Adobe AIR Application Descriptor File Template.
+     Specifies parameters for identifying, installing, and launching AIR applications.
+
+     xmlns - The Adobe AIR namespace: http://ns.adobe.com/air/application/23.0.
+     The last segment of the namespace specifies the version of the AIR runtime required for this application to run.
+
+     minimumPatchLevel - The minimum patch level of the AIR runtime required to run the application. Optional. -->
+
+<application xmlns="http://ns.adobe.com/air/application/23.0">
+
+    <id>blnk.fab.demo</id>
+    <filename>FAB Test</filename>
+    <name>Font Atlas Builder Test</name>
+    <versionNumber>0.0.1</versionNumber>
+
+    <initialWindow>
+        <content>SWF file name is set automatically at compile time</content>
+        <title>Font Atlas Builder Test</title>
+        <visible>true</visible>
+        <aspectRatio>landscape</aspectRatio>
+        <renderMode>direct</renderMode>
+        <depthAndStencil>true</depthAndStencil>
+        <requestedDisplayResolution>high</requestedDisplayResolution>
+    </initialWindow>
+
+</application>
