@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="desktop SWC" type="FlashRunConfigurationType" factoryName="Flash App" singleton="true">
-    <option name="BCName" value="desktop swc" />
+  <configuration default="false" name="desktop" type="FlashRunConfigurationType" factoryName="Flash App" singleton="true">
+    <option name="BCName" value="desktop" />
     <option name="IOSSimulatorSdkPath" value="" />
     <option name="adlOptions" value="" />
     <option name="airProgramParameters" value="" />

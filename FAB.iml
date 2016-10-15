@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="Flex" version="4">
-  <component name="FlexBuildConfigurationManager" active="desktop swc">
+  <component name="FlexBuildConfigurationManager" active="desktop">
     <configurations>
-      <configuration name="desktop swc" target-platform="Desktop" pure-as="true" main-class="Boot" output-file="fab.swf" output-folder="$MODULE_DIR$/sample/bin">
+      <configuration name="desktop" target-platform="Desktop" pure-as="true" main-class="Boot" output-file="fab.swf" output-folder="$MODULE_DIR$/sample/bin">
         <dependencies target-player="23.0">
           <entries>
             <entry library-id="5a308deb-3388-4765-a26f-90743784b453">
@@ -16,20 +16,6 @@
         </dependencies>
         <compiler-options />
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/certificate-app.xml" package-file-name="fab" />
-        <packaging-android />
-        <packaging-ios />
-      </configuration>
-      <configuration name="desktop external assets" target-platform="Desktop" pure-as="true" main-class="Boot" output-file="desktop_external_assets.swf" output-folder="$MODULE_DIR$/sample/bin">
-        <dependencies>
-          <entries>
-            <entry library-id="3b2291a5-90d9-4c03-94b8-2a21d1ea8f91">
-              <dependency linkage="Merged" />
-            </entry>
-          </entries>
-          <sdk name="air_sdk" />
-        </dependencies>
-        <compiler-options />
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/certificate-app.xml" package-file-name="desktop_external_assets" />
         <packaging-android />
         <packaging-ios />
       </configuration>
@@ -59,16 +45,6 @@
         <properties id="e107c768-447a-4d99-b4fe-c5a325d7033a" />
         <CLASSES>
           <root url="jar://$MODULE_DIR$/sample/lib/fonts.swc!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library type="flex">
-        <properties id="3b2291a5-90d9-4c03-94b8-2a21d1ea8f91" />
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/sample/lib/starling.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -32,7 +32,7 @@ public class FontAtlasBuilder {
 	public static const SYMBOLS1:String = "!;%:?*()_+-=.,/\\|\"'@#$^&{}[]";
 	public static const CHARSET_LATIN1:String = LATIN_LOWERCASE + LATIN_UPPERCASE + DIGITS + SYMBOLS1;
 
-	public static const KERNING_PAIRS:String = " A | A' | AC | AG | AO | AQ | AT | AU | AV | AW | AY | BA | BE | BL | BP | BR | BU | BV | BW | BY | CA | CO | CR | DA | DD | DE | DI | DL | DM | DN | DO | DP | DR | DU | DV | DW | DY | EC | EO | FA | FC | FG | FO | F. | F, | GE | GO | GR | GU | HO | IC | IG | IO | JA | JO | KO | L' | LC | LT | LV | LW | LY | LG | LO | LU | M | MG | MO | NC | NG | NO | OA | OB | OD | OE | OF | OH | OI | OK | OL | OM | ON | OP | OR | OT | OU | OV | OW | OX | OY | PA | PE | PL | PO | PP | PU | PY | P. | P, | P; | P: | QU | RC | RG | RY | RT | RU | RV | RW | RY | SI | SM | ST | SU | TA | TC | TO | UA | UC | UG | UO | US | VA | VC | VG | VO | VS | WA | WC | WG | WO | YA | YC | YO | YS | ZO | Ac | Ad | Ae | Ag | Ao | Ap | Aq | At | Au | Av | Aw | Ay | Bb | Bi | Bk | Bl | Br | Bu | By | B. | B, | Ca | Cr | C. | C, | Da | D. | D, | Eu | Ev | Fa | Fe | Fi | Fo | Fr | Ft | Fu | Fy | F. | F, | F; | F: | Gu | He | Ho | Hu | Hy | Ic | Id | Iq | Io | It | Ja | Je | Jo | Ju | J. | J, | Ke | Ko | Ku | Lu | Ly | Ma | Mc | Md | Me | Mo | Nu | Na | Ne | Ni | No | Nu | N. | N, | Oa | Ob | Oh | Ok | Ol | O. | O, | Pa | Pe | Po | Rd | Re | Ro | Rt | Ru | Si | Sp | Su | S. | S, | Ta | Tc | Te | Ti | To | Tr | Ts | Tu | Tw | Ty | T. | T, | T; | T: | Ua | Ug | Um | Un | Up | Us | U. | U, | Va | Ve | Vi | Vo | Vr | Vu | V. | V, | V; | V: | Wd | Wi | Wm | Wr | Wt | Wu | Wy | W. | W, | W; | W: | Xa | Xe | Xo | Xu | Xy | Yd | Ye | Yi | Yp | Yu | Yv | Y. | Y, | Y; | Y: | ac | ad | ae | ag | ap | af | at | au | av | aw | ay | ap | bl | br | bu | by | b. | b, | ca | ch | ck | da | dc | de | dg | do | dt | du | dv | dw | dy | d. | d, | ea | ei | el | em | en | ep | er | et | eu | ev | ew | ey | e. | e, | fa | fe | ff | fi | fl | fo | f. | f, | ga | ge | gh | gl | go | gg | g. | g, | hc | hd | he | hg | ho | hp | ht | hu | hv | hw | hy | ic | id | ie | ig | io | ip | it | iu | iv | ja | je | jo | ju | j. | j, | ka | kc | kd | ke | kg | ko | la | lc | ld | le | lf | lg | lo | lp | lq | lu | lv | lw | ly | ma | mc | md | me | mg | mn | mo | mp | mt | mu | mv | my | nc | nd | ne | ng | no | np | nt | nu | nv | nw | ny | ob | of | oh | oj | ok | ol | om | on | op | or | ou | ov | ow | ox | oy | o. | o, | pa | ph | pi | pl | pp | pu | p. | p, | qu | t. | ra | rd | re | rg | rk | rl | rm | rn | ro | rq | rr | rt | rv | ry | r. | r, | sh | st | su | s. | s, | td | ta | te | to | t. | t, | ua | uc | ud | ue | ug | uo | up | uq | ut | uv | uw | uy | va | vb | vc | vd | ve | vg | vo | vv | vy | v. | v, | wa | wx | wd | we | wg | wh | wo | w. | w, | xa | xe | xo | y. | y, | ya | yc | yd | ye | yo | Wa";
+	public static const KERNING_PAIRS:Vector.<String> = Vector.<String>([" A","A'","AC","AG","AO","AQ","AT","AU","AV","AW","AY","BA","BE","BL","BP","BR","BU","BV","BW","BY","CA","CO","CR","DA","DD","DE","DI","DL","DM","DN","DO","DP","DR","DU","DV","DW","DY","EC","EO","FA","FC","FG","FO","F.","F,","GE","GO","GR","GU","HO","IC","IG","IO","JA","JO","KO","L'","LC","LT","LV","LW","LY","LG","LO","LU","M","MG","MO","NC","NG","NO","OA","OB","OD","OE","OF","OH","OI","OK","OL","OM","ON","OP","OR","OT","OU","OV","OW","OX","OY","PA","PE","PL","PO","PP","PU","PY","P.","P,","P;","P:","QU","RC","RG","RY","RT","RU","RV","RW","RY","SI","SM","ST","SU","TA","TC","TO","UA","UC","UG","UO","US","VA","VC","VG","VO","VS","WA","WC","WG","WO","YA","YC","YO","YS","ZO","Ac","Ad","Ae","Ag","Ao","Ap","Aq","At","Au","Av","Aw","Ay","Bb","Bi","Bk","Bl","Br","Bu","By","B.","B,","Ca","Cr","C.","C,","Da","D.","D,","Eu","Ev","Fa","Fe","Fi","Fo","Fr","Ft","Fu","Fy","F.","F,","F;","F:","Gu","He","Ho","Hu","Hy","Ic","Id","Iq","Io","It","Ja","Je","Jo","Ju","J.","J,","Ke","Ko","Ku","Lu","Ly","Ma","Mc","Md","Me","Mo","Nu","Na","Ne","Ni","No","Nu","N.","N,","Oa","Ob","Oh","Ok","Ol","O.","O,","Pa","Pe","Po","Rd","Re","Ro","Rt","Ru","Si","Sp","Su","S.","S,","Ta","Tc","Te","Ti","To","Tr","Ts","Tu","Tw","Ty","T.","T,","T;","T:","Ua","Ug","Um","Un","Up","Us","U.","U,","Va","Ve","Vi","Vo","Vr","Vu","V.","V,","V;","V:","Wd","Wi","Wm","Wr","Wt","Wu","Wy","W.","W,","W;","W:","Xa","Xe","Xo","Xu","Xy","Yd","Ye","Yi","Yp","Yu","Yv","Y.","Y,","Y;","Y:","ac","ad","ae","ag","ap","af","at","au","av","aw","ay","ap","bl","br","bu","by","b.","b,","ca","ch","ck","da","dc","de","dg","do","dt","du","dv","dw","dy","d.","d,","ea","ei","el","em","en","ep","er","et","eu","ev","ew","ey","e.","e,","fa","fe","ff","fi","fl","fo","f.","f,","ga","ge","gh","gl","go","gg","g.","g,","hc","hd","he","hg","ho","hp","ht","hu","hv","hw","hy","ic","id","ie","ig","io","ip","it","iu","iv","ja","je","jo","ju","j.","j,","ka","kc","kd","ke","kg","ko","la","lc","ld","le","lf","lg","lo","lp","lq","lu","lv","lw","ly","ma","mc","md","me","mg","mn","mo","mp","mt","mu","mv","my","nc","nd","ne","ng","no","np","nt","nu","nv","nw","ny","ob","of","oh","oj","ok","ol","om","on","op","or","ou","ov","ow","ox","oy","o.","o,","pa","ph","pi","pl","pp","pu","p.","p,","qu","t.","ra","rd","re","rg","rk","rl","rm","rn","ro","rq","rr","rt","rv","ry","r.","r,","sh","st","su","s.","s,","td","ta","te","to","t.","t,","ua","uc","ud","ue","ug","uo","up","uq","ut","uv","uw","uy","va","vb","vc","vd","ve","vg","vo","vv","vy","v.","v,","wa","wx","wd","we","wg","wh","wo","w.","w,","xa","xe","xo","y.","y,","ya","yc","yd","ye","yo","Wa", " a","a "," b","b "," c","c "," d","d "," e","e "," f","f "," g","g "," h","h "," i","i "," j","j "," k","k "," l","l "," m","m "," n","n "," o","o "," p","p "," q","q "," r","r "," s","s "," t","t "," u","u "," v","v "," w","w "," x","x "," y","y "," z","z "," A","A "," B","B "," C","C "," D","D "," E","E "," F","F "," G","G "," H","H "," I","I "," J","J "," K","K "," L","L "," M","M "," N","N "," O","O "," P","P "," Q","Q "," R","R "," S","S "," T","T "," U","U "," V","V "," W","W "," X","X "," Y","Y "," Z","Z "]) ;
 
 	private const MATRIX:Matrix = new Matrix();
 	private const POINT:Point = new Point();
@@ -46,10 +46,10 @@ public class FontAtlasBuilder {
 
 	private var tmpCharSize:Point = new Point();
 	private var _biggestCharSize:int;
-	private var _kerningPairs_arr:Array;
+//	private var _kerningPairs_arr:Array;
 
 	public var chars:String = CHARSET_LATIN1;
-	public var kerningPairs:String = KERNING_PAIRS;
+	public var kerningPairs:Vector.<String> = KERNING_PAIRS ;
 
 	public var padding:int = 2;
 
@@ -151,18 +151,10 @@ public class FontAtlasBuilder {
 		// create the tmp bdata to store the biggest char.
 		var tw:int = tmpCharSize.x;
 		var th:int = tmpCharSize.y;
-//		if ( useRetinaDisplay ) {
-//			tw *= 2;
-//			th *= 2;
-//		}
 
 		// fix the atlas filename
 		if ( fontAtlasFilename.indexOf( ".png" ) == -1 )
 			fontAtlasFilename += ".png";
-
-		if ( calculateKerning ) {
-			_kerningPairs_arr = kerningPairs.split( " | " );
-		}
 
 		_tmp_char_bd = new BitmapData( tw, th );
 		_tmp_char_bd_rect = _tmp_char_bd.rect;
@@ -229,8 +221,18 @@ public class FontAtlasBuilder {
 
 		fontVO.fontXml.appendChild( infoNode );
 		fontVO.fontXml.appendChild( commonNode );
-		fontVO.fontXml.appendChild( new XML( <pages>
+
+		// Starling fails to point to a file path with
+		// different name than the xml, so it can't map the font
+		// and disposes the XML, so we can't use AssetManager.
+
+		/*fontVO.fontXml.appendChild( new XML( <pages>
 			<page id="0" file={fontAtlasFilename}/>
+		</pages> ) );*/
+
+		// so, if the fontId is "verdana", the xml and png should be "verdana"
+		fontVO.fontXml.appendChild( new XML( <pages>
+			<page id="0" file={fontVO.id+".png"}/>
 		</pages> ) );
 
 		// store all charVO information.
@@ -302,7 +304,6 @@ public class FontAtlasBuilder {
 				_kerning1_tf.antiAliasType = _kerning2_tf.antiAliasType = AntiAliasType.NORMAL;
 			}
 			var kerningsXML:XML = new XML( <kernings></kernings> );
-
 			_currentFormat.kerning = false;
 			_kerning1_tf.defaultTextFormat = _currentFormat;
 
@@ -311,8 +312,9 @@ public class FontAtlasBuilder {
 
 			_stage.addChild( _kerning1_tf );
 			_stage.addChild( _kerning2_tf );
-			for ( i = 0; i < _kerningPairs_arr.length; i++ ) {
-				var pair:String = _kerningPairs_arr[i];
+
+			for ( i = 0; i < kerningPairs.length; i++ ) {
+				var pair:String = kerningPairs[i];
 				if ( !currentFont.hasGlyphs( pair ) || pair.length != 2 ) {
 					trace( "Kerning pair nor available: " + pair );
 					continue;
@@ -511,6 +513,13 @@ public class FontAtlasBuilder {
 		fs.open( file, FileMode.WRITE );
 		fs.writeBytes( ba );
 		fs.close();
+	}
+
+	public function addKernings( list:Array ):void {
+		for each( var kn:String in list ){
+			if( kn.length==2 && kerningPairs.indexOf(kn)==-1 )
+				kerningPairs[kerningPairs.length] = kn ;
+		}
 	}
 }
 }
