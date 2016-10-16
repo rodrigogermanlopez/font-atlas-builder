@@ -53,7 +53,6 @@ public class DemoLoadAtlas extends Sprite {
 	}
 
 	private function assetsLoaded():void {
-
 		var tf:TextField;
 		var format:TextFormat= new TextFormat( null, -1, 0x0 ) ;
 		format.horizontalAlign = "left";

@@ -5,10 +5,10 @@
       <configuration name="desktop" target-platform="Desktop" pure-as="true" main-class="Boot" output-file="fab.swf" output-folder="$MODULE_DIR$/sample/bin">
         <dependencies target-player="23.0">
           <entries>
-            <entry library-id="5a308deb-3388-4765-a26f-90743784b453">
+            <entry library-id="e107c768-447a-4d99-b4fe-c5a325d7033a">
               <dependency linkage="Merged" />
             </entry>
-            <entry library-id="e107c768-447a-4d99-b4fe-c5a325d7033a">
+            <entry library-id="9db6ef4a-532c-4ac5-8ce7-8d4cf0b9b824">
               <dependency linkage="Merged" />
             </entry>
           </entries>
@@ -32,9 +32,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="5a308deb-3388-4765-a26f-90743784b453" />
+        <properties id="e107c768-447a-4d99-b4fe-c5a325d7033a" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/sample/lib/starling.swc!/" />
+          <root url="jar://$MODULE_DIR$/sample/lib/fonts.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -42,9 +42,9 @@
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="e107c768-447a-4d99-b4fe-c5a325d7033a" />
+        <properties id="9db6ef4a-532c-4ac5-8ce7-8d4cf0b9b824" />
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/sample/lib/fonts.swc!/" />
+          <root url="jar://$MODULE_DIR$/sample/lib/starling.swc!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

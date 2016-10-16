@@ -57,6 +57,12 @@ public class DemoBuildAtlas extends Sprite {
 		// you can define a folder to export the xml/png.
 		fab.exportDir = File.desktopDirectory.resolvePath( "fab_export" );
 
+		// in order to make rotated glyphs work with Starling, change line 148 in BitmapFont.as
+		// to this:
+//		var texture:Texture = Texture.fromTexture(_texture, region, null, String(charElement.@rotated).toLowerCase() == "true");
+		fab.allowRotation
+				= false ;
+
 		// used as a filename for the png and to map the xml properly.
 		fab.fontAtlasFilename = "allfonts";
 
@@ -71,9 +77,9 @@ public class DemoBuildAtlas extends Sprite {
 		fab.addFontByStyle( HELVETICA_BOLDITALIC, HELVETICA_BOLDITALIC, 30, 0xffffff );
 
 		// add some DEVICE fonts... (metrics not available, neither kerning)
-		fab.addFontByStyle( VERDANA, "Verdana", 20, 0xffffff, false, false );
-		fab.addFontByStyle( VERDANA_B, "Verdana", 20, 0xffffff, true, false );
-		fab.addFontByStyle( VERDANA_I, "Verdana", 20, 0xffffff, false, true );
+//		fab.addFontByStyle( VERDANA, "Verdana", 20, 0xff00ff, false, false );
+//		fab.addFontByStyle( VERDANA_B, "Verdana", 20, 0xffffff, true, false );
+//		fab.addFontByStyle( VERDANA_I, "Verdana", 20, 0xff00ff, false, true );
 //		fab.addFontByStyle( VERDANA_BI, "Verdana", 22, 0xff00ff, true, true );
 
 		// this will crop the extra space from the atlas. Use it if u will include this into
@@ -114,8 +120,8 @@ public class DemoBuildAtlas extends Sprite {
 
 		stage.color = 0xcdcdcd;
 
-		testExport() ;
-//		testInStarling();
+//		testExport() ;
+		testInStarling();
 	}
 
 	private function testInStarling():void {
@@ -221,9 +227,9 @@ public class DemoBuildAtlas extends Sprite {
 	private function createStarlingFonts():void {
 		fontsTexture = Texture.fromBitmapData( fab.atlas_bd );
 		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( HELVETICA_REGULAR ) ), HELVETICA_REGULAR );
-//		starling.text.TextField.registerCompositor( new BitmapFont( texture, fab.getFontStyleXML( HELVETICA_BOLDITALIC ) ), HELVETICA_BOLDITALIC );
-		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA ) ), VERDANA );
-		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA_B ) ), VERDANA_B );
+		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( HELVETICA_BOLDITALIC ) ), HELVETICA_BOLDITALIC );
+//		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA ) ), VERDANA );
+//		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA_B ) ), VERDANA_B );
 	}
 
 	private function testExport():void {

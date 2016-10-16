@@ -4,6 +4,7 @@
  *
  */
 package {
+import demos.DemoBuildAtlas;
 import demos.DemoLoadAtlas;
 
 import flash.desktop.NativeApplication;

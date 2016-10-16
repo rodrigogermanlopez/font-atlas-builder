@@ -87,6 +87,11 @@ public class FontAtlasBuilder {
 	// Dont' forget to INCLUDE the .png extension.
 	public var fontAtlasFilename:String = "fonts.png";
 
+	// compress even more the atlas by using 90deg rotated rects.
+	// requires change in Starlings BitmapFont to work with rotated glyphs, although
+	// maybe batching breaks when rendering a lot of text.
+	public var allowRotation:Boolean = false ;
+
 	// stage is required for System Fonts to calculate the glyph bounds.
 	// otherwise xAdvance will store a tiny/ridiculous value.
 	private var _stage:Stage;
@@ -354,7 +359,7 @@ public class FontAtlasBuilder {
 		}
 		// create the atlas.
 		_packer = new MaxRectsBinPack( atlasWidth - padding, atlasHeight - padding );
-		_packer.allowFlip = false;
+		_packer.allowFlip = allowRotation ;
 		var list:Vector.<Rectangle> = new Vector.<Rectangle>();
 		for ( var i:int = 0; i < _glyphList.length; i++ ) {
 			var charVO:Object = _glyphList[i];
@@ -412,6 +417,8 @@ public class FontAtlasBuilder {
 			}
 			if ( charVO.isFlipped ) {
 				charNode.@rotated = true;
+				r.y -= padding ;
+				r.height += padding ;
 			}
 			charNode.@x = r.x + padding;
 			charNode.@y = r.y + padding;
