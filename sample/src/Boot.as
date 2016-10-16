@@ -4,8 +4,7 @@
  *
  */
 package {
-import demos.DemoBuildAtlas;
-import demos.DemoLoadAtlas;
+import demos.*;
 
 import flash.desktop.NativeApplication;
 import flash.display.Sprite;
@@ -29,10 +28,10 @@ public class Boot extends Sprite {
 		var Demo:Class;
 
 		// test classes
-//		Demo = DemoWaysToEmbed ;
+		Demo = DemoWaysToEmbed ;
 //		Demo = DemoLoadSWF ;
 //		Demo = DemoBuildAtlas;
-		Demo = DemoLoadAtlas;
+//		Demo = DemoLoadAtlas;
 
 		var starling:Starling = new Starling( Demo, stage, new Rectangle( 0, 0, stage.stageWidth, stage.stageHeight ) );
 
