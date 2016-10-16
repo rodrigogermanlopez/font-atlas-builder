@@ -19,6 +19,11 @@ fab.exportDir = File.desktopDirectory.resolvePath( "fab_export" );
 fab.defineAtlas( 256, 256, 0x0 ) ; // transparent bg spritesheet 256x256
 fab.padding = 2 ; // padding between glyphs/margin
 
+// you can rotate the quads inside the sprite to gain more room
+// during the spritesheet's packing (not supported by Starling, requires a tiny hack to BitmapText).
+// and I guess it breaks batching while rendering tons of glyphs on screen...
+fab.allowRotation = true ;
+
 // System fonts based on familyName (OSX FontBook)
 fab.addFontByStyle( "arialBold", "Arial", 30, 0xff0000, true, false ) ; // arial at 30pt, red, BOLD
 fab.addFontByStyle( "courierNew", "Courier New", 30, 0x00ff00, false, true ) ; // courier new at 30pt, green, ITALIC
@@ -53,3 +58,10 @@ fab.onPackComplete = function(){
 // start processing the fonts.
 fab.process();
 ```
+
+**UPDATE:**
+
+Now it has the option to package rotated glyphs, just set
+    allowRotation=true
+
+![Image spritesheet](https://dl.dropboxusercontent.com/u/21621726/starling/fab_atlas2.png)
