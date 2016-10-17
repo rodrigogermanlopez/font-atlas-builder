@@ -28,10 +28,11 @@ public class Boot extends Sprite {
 		var Demo:Class;
 
 		// test classes
-		Demo = DemoWaysToEmbed ;
+//		Demo = DemoWaysToEmbed ;
 //		Demo = DemoLoadSWF ;
-//		Demo = DemoBuildAtlas;
+		Demo = DemoBuildAtlas;
 //		Demo = DemoLoadAtlas;
+//		Demo = DemoDistanceField ;
 
 		var starling:Starling = new Starling( Demo, stage, new Rectangle( 0, 0, stage.stageWidth, stage.stageHeight ) );
 
