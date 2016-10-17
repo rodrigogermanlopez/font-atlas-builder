@@ -65,3 +65,18 @@ Now it has the option to package rotated glyphs, just set
     allowRotation=true
 
 ![Image spritesheet](https://dl.dropboxusercontent.com/u/21621726/starling/fab_atlas2.png)
+
+**UPDATE 17/10/2016 :**
+
+Signed Distance Fields generator included as a separated class (DFS.as)
+The DF generation process is REALLY heavy in CPU terms, that's why I split the logic in batches to avoid blocking the UI and overloading the CPU/freezing the app.
+
+Is not integrated into FAB yet, but is useful to process and export any DisplayObject (or BitmapData)
+
+[Sample class](https://github.com/rodrigogermanlopez/font-atlas-builder/blob/master/sample/src/demos/DemoDistanceField.as) 
+
+Partial DF generation in realtime:
+![partial DF generation](https://dl.dropboxusercontent.com/u/21621726/starling/fds_demo1.png)
+
+DistanceFieldStyle applied in Starling when the process is completed:
+![Starling DistanceField](https://dl.dropboxusercontent.com/u/21621726/starling/fds_demo2.png)
