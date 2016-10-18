@@ -312,7 +312,7 @@ public class FontAtlasBuilder {
 				colorBounds.width += padding;
 				colorBounds.height += padding;
 
-				var char_bd:BitmapData = new BitmapData( colorBounds.width, colorBounds.height );
+				var char_bd:BitmapData = new BitmapData( colorBounds.width, colorBounds.height, true, 0x0 );
 				char_bd.copyPixels( _tmp_char_bd, colorBounds, POINT );
 				charVO.bd = char_bd;
 				charVO.charW = charVO.area.width;
