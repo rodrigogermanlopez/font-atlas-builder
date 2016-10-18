@@ -66,18 +66,47 @@ public class DemoBuildAtlas extends Sprite {
 		fab.fontAtlasFilename = "allfonts";
 
 		// define atlas width, height and bgColor(32 bits)
-		fab.defineAtlas( 512, 512, 0x0 ); // 0xFF000000
+//		fab.defineAtlas( 512, 512, 0x0 ); // 0xFF000000=100% black, fixed size
+//		fab.defineAtlas( 128, -1, 0x0 ); // fixed width, autoSize height.
+
+		// "autoSize" atlas... we can define smart autoSize variables
+		fab.defineAtlas( -1, -1, 0x44cc0000 ); // some bg color to debug the atlas size.
+
+		// this toggles between autoSize increment per axis (width and height).
+		// expanding one at a time
+		fab.smartAxisAutoSize = true ;
+
+		// when "autoSize" on any axis and forceSquareAtlasSize=false, this incremental value is used for each
+		// pack recursion to have more control over how much we expand the canvas bin on each iteration.
+		// lower numbers, MORE recursions, MORE compression.
+		fab.autoSizeInc = 16 ;
+
+		// when "autoSize" on any axis and forceSquareAtlasSize=false, this defines the initial value
+		// for the bin.
+		fab.autoSizeStartValue = 200  ;
+
+		// forces power of 2 dimensions on the atlas, it skips the autoSizeInc value and overrides the defineAtlas()
+		// values. But it can toggle the axis when used with  smartAxisAutoSize=true, so it can generate
+		// 256x512 atlases.
+		fab.forceSquareAtlasSize = false ;
 
 		// padding between chars and edges of the bitmap.
 		fab.padding = 2;
 
+		// characters to be included, needs to be defined BEFORE adding a style.
+		fab.chars = FontAtlasBuilder.CHARSET_LATIN1;
+
 		// add fonts ...
-		fab.addFontByStyle( HELVETICA_REGULAR, HELVETICA_REGULAR, 30, 0xffffff );
-		fab.addFontByStyle( HELVETICA_BOLDITALIC, HELVETICA_BOLDITALIC, 30, 0xffffff );
+		fab.addFontByStyle( HELVETICA_REGULAR, HELVETICA_REGULAR, 28, 0xffffff );
+//		fab.addFontByStyle( HELVETICA_BOLDITALIC, HELVETICA_BOLDITALIC, 30, 0xffffff );
 
 		// add some DEVICE fonts... (metrics not available, neither kerning)
-		fab.addFontByStyle( VERDANA, "Verdana", 20, 0xff00ff, false, false );
-		fab.addFontByStyle( VERDANA_B, "Verdana", 20, 0xffffff, true, false );
+		fab.addFontByStyle( VERDANA, "Verdana", 20, 0xffffff, false, false );
+
+		// change the chars to be added.
+		fab.chars = FontAtlasBuilder.DIGITS ;
+		fab.addFontByStyle( "times", "Times New Roman", 80, 0xffffff, true, false );
+//		fab.addFontByStyle( VERDANA_B, "Verdana", 20, 0xffffff, true, false );
 //		fab.addFontByStyle( VERDANA_I, "Verdana", 20, 0xff00ff, false, true );
 //		fab.addFontByStyle( VERDANA_BI, "Verdana", 22, 0xff00ff, true, true );
 
@@ -87,9 +116,6 @@ public class DemoBuildAtlas extends Sprite {
 
 		// calculate the kerning for the specific font (takes a few extra ms)
 		fab.calculateKerning = true;
-
-		// characters to be included.
-		fab.chars = FontAtlasBuilder.CHARSET_LATIN1;
 
 		// round the values in the atlas (kerning and xadvance), not needed.
 		fab.roundXMLValues = false;
@@ -119,8 +145,8 @@ public class DemoBuildAtlas extends Sprite {
 
 		stage.color = 0xcdcdcd;
 
-		testExport() ;
-//		testInStarling();
+//		testExport() ;
+		testInStarling();
 	}
 
 	private function testInStarling():void {
@@ -188,7 +214,9 @@ public class DemoBuildAtlas extends Sprite {
 
 		var texto:String = "This is a Test... VAMOS\nmultiple lines to ValidaTe lineH.";
 
-		var format:TextFormat = Utils.getStarlingFormat( HELVETICA_REGULAR, 30, 0x0 );
+		var fontId:String = fab.getFontStylesNames()[0] ;
+
+		var format:TextFormat = Utils.getStarlingFormat( fontId, 30, 0x0 );
 		format.kerning = true;
 		format.horizontalAlign = "left";
 
@@ -199,7 +227,7 @@ public class DemoBuildAtlas extends Sprite {
 		addChild( tf1 );
 		tf1.text = texto;
 
-		var format2:flash.text.TextFormat = Utils.getFlashFormat( HELVETICA_REGULAR, 30, 0x0, false, false, true );
+		var format2:flash.text.TextFormat = Utils.getFlashFormat( fontId, format.size, 0x0, false, false, true );
 		format2.kerning = true;
 
 		var tf2 = new flash.text.TextField();
@@ -225,10 +253,19 @@ public class DemoBuildAtlas extends Sprite {
 
 	private function createStarlingFonts():void {
 		fontsTexture = Texture.fromBitmapData( fab.atlas_bd );
-		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( HELVETICA_REGULAR ) ), HELVETICA_REGULAR );
-		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( HELVETICA_BOLDITALIC ) ), HELVETICA_BOLDITALIC );
-		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA ) ), VERDANA );
-		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA_B ) ), VERDANA_B );
+
+		// register automatically
+		var fonts:Array = fab.getFontStylesNames() ;
+		trace("Packed fonts = " + fonts ) ;
+		for each( var fontId:String in fonts ){
+			starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( fontId ) ), fontId );
+		}
+
+		// register manually.
+//		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( HELVETICA_REGULAR ) ), HELVETICA_REGULAR );
+//		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( HELVETICA_BOLDITALIC ) ), HELVETICA_BOLDITALIC );
+//		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA ) ), VERDANA );
+//		starling.text.TextField.registerCompositor( new BitmapFont( fontsTexture, fab.getFontStyleXML( VERDANA_B ) ), VERDANA_B );
 	}
 
 	private function testExport():void {

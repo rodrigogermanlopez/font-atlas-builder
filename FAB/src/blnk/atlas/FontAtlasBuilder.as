@@ -96,6 +96,26 @@ public class FontAtlasBuilder {
 	// otherwise xAdvance will store a tiny/ridiculous value.
 	private var _stage:Stage;
 
+
+	// defines the initial value to pack an unknown canvas size.
+	public var autoSizeStartValue:int = 32;
+
+	// defines the increment in width/height for the canvas when packing the rectangles.
+	// on each iteration it'll sum up this value until all glyphs fits on the canvas area.
+	// example: 128, 160, 192, 224, ...
+	public var autoSizeInc:int = 32;
+
+	// this flag forces the atlas size to be power of 2.
+	// it overrides autoSizeInc. But works with autoSize (canvasW==-1 || canvasH==-1)
+	// and smartAxisAutoSize.
+	public var forceSquareAtlasSize:Boolean;
+
+	// this flag defines that each loop on autoSize (ONLY when atlasWidth=atlasHeight<=0 )
+	// will increase only 1 axis at a time, maybe making the packing more compressed than a
+	// square image.
+	public var smartAxisAutoSize:Boolean;
+
+
 	/**
 	 * Constructor
 	 * @param nativeStage
@@ -137,6 +157,7 @@ public class FontAtlasBuilder {
 	public function addFontByTextFormat( fontId:String, format:TextFormat ):void {
 		// create text map
 		var fontVO:Object = {format: format, id: fontId};
+		fontVO.charString = chars ;
 		_fontsVO.push( fontVO );
 		_fontMapById[fontId] = fontVO;
 		_tmp_tf.setTextFormat( format );
@@ -193,7 +214,9 @@ public class FontAtlasBuilder {
 		_tmp_tf.defaultTextFormat = _currentFormat;
 
 		var fontVO:Object = _fontVO;
+		_tmp_tf.text = "Jjlg" ;
 		var metrics:TextLineMetrics = _tmp_tf.getLineMetrics( 0 );
+		var lineHeight:Number = Math.max(metrics.height, _tmp_tf.textHeight);
 
 		fontVO.fontXml = new XML( <font></font> );
 		var infoNode:XML = new XML( <info /> );
@@ -220,7 +243,7 @@ public class FontAtlasBuilder {
 		}
 
 		var commonNode:XML = new XML( <common /> );
-		commonNode.@lineHeight = roundXMLValues ? int( metrics.height ) : metrics.height;
+		commonNode.@lineHeight = roundXMLValues ? int( lineHeight ) : lineHeight;
 		commonNode.@base = metrics.ascent + 2;
 		commonNode.@packed = 0;
 
@@ -243,15 +266,17 @@ public class FontAtlasBuilder {
 		// store all charVO information.
 		var charsInfo:Array = fontVO.charsInfo = [];
 
+		var fontCharsString:String = fontVO.charString ;
+
 		// first char is always space
-		if ( chars.charAt( 0 ) != " " ) {
-			chars = " " + chars;
+		if ( fontCharsString.charAt( 0 ) != " " ) {
+			fontCharsString = " " + fontCharsString ;
 		}
 
 		// MAKE SURE THE FIRST CHAR IS THE SACE.
 		// first the space char.
-		for ( var i:int = 0; i < chars.length; i++ ) {
-			var charStr:String = chars.charAt( i );
+		for ( var i:int = 0; i < fontCharsString.length; i++ ) {
+			var charStr:String = fontCharsString.charAt( i );
 			var charCode:int = charStr.charCodeAt( 0 );
 			var charVO:Object = {char: charStr, code: charCode};
 			charVO.fontVO = fontVO;
@@ -357,9 +382,7 @@ public class FontAtlasBuilder {
 		for each( var fontVO:Object in _fontsVO ) {
 			_glyphList = _glyphList.concat( fontVO.charsInfo );
 		}
-		// create the atlas.
-		_packer = new MaxRectsBinPack( atlasWidth - padding, atlasHeight - padding );
-		_packer.allowFlip = allowRotation ;
+		// store the current "items".
 		var list:Vector.<Rectangle> = new Vector.<Rectangle>();
 		for ( var i:int = 0; i < _glyphList.length; i++ ) {
 			var charVO:Object = _glyphList[i];
@@ -370,8 +393,64 @@ public class FontAtlasBuilder {
 			}
 			list.push( charVO.atlasRect );
 		}
-		_packer.onComplete = onPackCompleted;
-		_packer.insertBulk( list, MaxRectsBinPack.METHOD_RECT_BEST_AREA_FIT );
+
+
+		// -- Smart packing -- //
+
+		var fixedCanvasW:Boolean = atlasWidth > padding;
+		var fixedCanvasH:Boolean = atlasHeight > padding;
+
+		// Smart expansion flag when "autoSize"==true && smartAxisAutoSize==true
+		var expandW:Boolean = true ;
+
+		if ( forceSquareAtlasSize ) {
+			atlasWidth = getNextPowerOfTwo(atlasWidth);
+			atlasHeight = getNextPowerOfTwo(atlasHeight);
+			autoSizeStartValue = getNextPowerOfTwo(autoSizeStartValue);
+		}
+
+		var canvasW:int = fixedCanvasW ? atlasWidth : autoSizeStartValue;
+		var canvasH:int = fixedCanvasH ? atlasHeight : autoSizeStartValue;
+
+		tryNextAtlasSize();
+
+		function tryNextAtlasSize():void {
+			expandW = !expandW ;
+			if ( !_packer ) {
+				_packer = new MaxRectsBinPack( canvasW - padding, canvasH - padding );
+			} else {
+				_packer.init( canvasW - padding, canvasH - padding );
+			}
+			_packer.allowFlip = allowRotation;
+			_packer.onComplete = packingComplete;
+			_packer.insertBulk( list.concat(), MaxRectsBinPack.METHOD_RECT_BEST_AREA_FIT );
+		}
+
+		function packingComplete():void {
+			var diff:int = _glyphList.length - _packer.indices.length;
+			trace( "Packing items diff = " + diff );
+			if ( diff > 0 ) {
+				// error!
+				if ( fixedCanvasW && fixedCanvasH ) {
+					trace( diff + " items were skipped from the packing! Use a dynamic size atlas" );
+					onPackCompleted();
+				} else {
+					var processAxisWidth:Boolean = !smartAxisAutoSize ? true : expandW ;
+					var processAxisHeight:Boolean = !smartAxisAutoSize ? true : !expandW ;
+					if ( !fixedCanvasW && processAxisWidth )
+						canvasW = forceSquareAtlasSize ? getNextPowerOfTwo(++canvasW) : canvasW + autoSizeInc ;
+					if ( !fixedCanvasH && processAxisHeight )
+						canvasH = forceSquareAtlasSize ? getNextPowerOfTwo(++canvasH) : canvasH + autoSizeInc;
+					trace( "Trying next atlas size=" + canvasW + "x" + canvasH );
+					tryNextAtlasSize();
+				}
+			} else {
+				atlasWidth = canvasW;
+				atlasHeight = canvasH;
+				trace( "Final atlas size=" + canvasW + "x" + canvasH );
+				onPackCompleted();
+			}
+		}
 	}
 
 	private function onPackCompleted():void {
@@ -459,6 +538,13 @@ public class FontAtlasBuilder {
 		return fontVO.fontXml as XML;
 	}
 
+	public function getFontStylesNames():Array {
+		var output:Array = [] ;
+		for ( var key:String in _fontMapById ) output.push(key) ;
+		output.sort(Array.CASEINSENSITIVE) ;
+		return output ;
+	}
+
 	private function getFontByName( name:String, onlyEmbed:Boolean = true ):Font {
 		var fontList:Array = onlyEmbed ? _embedFonts : Font.enumerateFonts( true );
 		for each( var f:Font in fontList ) {
@@ -528,5 +614,28 @@ public class FontAtlasBuilder {
 				kerningPairs[kerningPairs.length] = kn ;
 		}
 	}
+
+
+	//===================================================================================================================================================
+	//
+	//      ------  UTILITIES
+	//
+	//===================================================================================================================================================
+	/**
+	 * Taken from Starling's MathUtils.
+	 * @param number
+	 * @return
+	 */
+	public static function getNextPowerOfTwo( number:Number ):int {
+		if ( number is int && number > 0 && (number & (number - 1)) == 0 ) // see: http://goo.gl/D9kPj
+			return number;
+		else {
+			var result:int = 1;
+			number -= 0.000000001; // avoid floating point rounding errors
+			while ( result < number ) result <<= 1;
+			return result;
+		}
+	}
+
 }
 }
